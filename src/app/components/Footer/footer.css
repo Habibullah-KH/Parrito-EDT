@@ -1,0 +1,13 @@
+.footer_container{
+  box-shadow: 0 0 10px var(--clr-primary);
+  background-image: var(--gradient-primary);
+}
+
+.text_hover{
+    transition: ease-in-out 0.3s;
+}
+
+.text_hover:hover{
+    color: var(--clr-primary);
+    transform: translateY(-3px);
+}

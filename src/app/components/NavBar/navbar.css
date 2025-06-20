@@ -1,0 +1,20 @@
+.nav_btn_big_screen ul{
+    display: flex;
+    gap: 1rem;
+}
+
+/* control navbar dropdown*/
+.dropdown_container{
+    position: absolute;
+    right: -20px;
+    padding: 1rem;
+    width: 13rem;
+    border-radius: 0 0 0 10px;
+}
+
+/* control dropdown lists*/
+.dropdown_container ul{
+    display: grid;
+    gap: 5px;
+}
+

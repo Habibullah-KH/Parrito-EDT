@@ -1,0 +1,7 @@
+.iconContainer{
+  display: flex;
+  transition: ease-in-out 0.3s;
+}
+.iconContainer:hover{
+  opacity: 50%;
+}

@@ -1,0 +1,11 @@
+.logo_container{
+    display: flex;
+    padding: 3px;
+    cursor: pointer;
+    font-family: var(--font-secondary);
+}
+
+.logo_first_name{
+   font-size: 1.6rem;
+   font-weight: bold;
+}

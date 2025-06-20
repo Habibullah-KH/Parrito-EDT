@@ -1,0 +1,89 @@
+.button_container{
+    border: 2px solid gray;
+    border-radius: 0.5rem;
+    color: black;
+    position: relative;
+    z-index:1999;
+    transition: ease-in-out 0.3s;
+    padding: 5px;
+    text-align: center;
+    background-color: var(--clr-white);
+    
+}
+.button_container:hover{
+    color: white;
+}
+
+/* setup moving background */
+.button_container::before{
+    content: '';
+    z-index: -1;
+    position: absolute;
+    border-radius: 0.4rem;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    background-color: black;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* hover to functional moving background */
+.button_container:hover:before{
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* after remove mouse hover */
+.button_container::before{
+    transform-origin: right;
+}
+
+
+.button_container_dark{
+    border: 2px solid gray;
+    border-radius: 0.5rem;
+    color: white;
+    position: relative;
+    z-index:1999;
+    transition: ease-in-out 0.3s;
+    padding: 5px;
+    text-align: center;
+    background-color: var(--clr-black);
+}
+.button_container_dark:hover{
+    color: black;
+}
+
+/* setup moving background */
+.button_container_dark::before{
+    content: '';
+    z-index: -1;
+    position: absolute;
+    border-radius: 0.4rem;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    background-color: white;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* hover to functional moving background */
+.button_container_dark:hover:before{
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* after remove mouse hover */
+.button_container_dark::before{
+    transform-origin: right;
+}
+
+

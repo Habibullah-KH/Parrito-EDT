@@ -1,0 +1,51 @@
+.ThemeSwap-button{
+    position: relative;
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+/* Customize each icon*/
+.ThemeSwap-button .icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+/* Customize each icon*/
+.ThemeSwap-button .icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+/* moon icon always top default */
+.ThemeSwap-button .moon-icon {
+opacity: 1;
+transform: rotate(0deg);
+
+}
+
+/* sun icon always top default */
+.ThemeSwap-button .sun-icon {
+opacity: 0;
+transform: rotate(-90deg);
+}
+
+/* moon icon hover */
+.ThemeSwap-button.active .moon-icon {
+opacity: 0;
+transform: rotate(90deg);
+}
+
+/* sun icon hover */
+.ThemeSwap-button.active .sun-icon {
+opacity: 1;
+transform: rotate(0deg);
+color: yellow;
+}
