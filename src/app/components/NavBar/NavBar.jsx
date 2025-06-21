@@ -8,9 +8,10 @@ import Logo from '../Logo/Logo';
 import ProfileIcon from '../Buttons/Profile_button/ProfileIcon';
 import Dropdown from '../Dropdown/Dropdown';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function NavBar(){
-
+    const {data : session, status} = useSession();
     const {swapTheme} = useTheme();
 
     const [navDrop, setNavDrop] = useState(false);
@@ -35,7 +36,7 @@ return(
 <div className='flex items-center absolute right-5 md:static'>
      {/*theme section start*/}
      <div 
-     className='ml-7 text-xl flex'
+     className='ml-7 mr-4 text-xl flex'
      onClick={swapTheme}
      >
      <ThemeSwap/>
@@ -43,20 +44,30 @@ return(
      {/*theme section end*/}
 
 {/*dropdown section start*/}
-<div className='relative'>
+{status === "authenticated" ? (
+  <div className='relative'>
     <div 
-    className='flex ml-5'
-    onClick={handleDropdown}
-    ><ProfileIcon/></div>
- {/*dropdown swapwe end*/}
+      className='flex ml-5'
+      onClick={handleDropdown}
+    >
+      <ProfileIcon />
+    </div>
 
- <div className=
-{`dropdown_container backdrop-blur-2xl 
-${navDrop ? 'top-[50px]':'-top-[590px]'}
-`}>
-   <Dropdown/>        
+    {/* Dropdown Swap */}
+    <div className={`dropdown_container backdrop-blur-2xl 
+  ${navDrop ? 'top-[50px]' : '-top-[590px]'}`}>
+  <Dropdown onClose={() => setNavDrop(false)} />
 </div>
-</div>
+
+  </div>
+) : (
+  <Link href={"/Register"}>
+    <ButtonBorder>Sign up</ButtonBorder>
+  </Link>
+)}
+
+
+
 </div>{/*button + theme container end*/}
 
     </div>

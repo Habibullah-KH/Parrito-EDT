@@ -1,34 +1,42 @@
 'use client'
-import { useState } from 'react'
-import { Field, Label, Switch } from '@headlessui/react'
 import ButtonFill from '@/app/components/Buttons/Button_fill/ButtonFill';
+import { signIn } from "next-auth/react"
 import Link from 'next/link';
 import ButtonBorder from '@/app/components/Buttons/Button_border/ButtonBorder';
-import { FcGoogle } from "react-icons/fc";
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { registerUser } from '@/app/actions/auth/registerUser';
+import SocialLogin from '@/app/components/SocialLogin/SocialLogin';
 
 export default function RegisterForm(){
-      const [agreed, setAgreed] = useState(false)
-
+      const router = useRouter();
       const handleSubmit = async (e)=>{
         e.preventDefault();
         const form = new FormData(e.target);
-        const firstName = form.get('first-name'); 
-        const lastName = form.get('last-name'); 
         const email = form.get('email'); 
         const password = form.get('password');
-        if(!agreed){
-            return toast.error('please agree privacy policy');
+        try{
+        const response = await signIn("credentials", 
+            {email, password, callbackUrl: "/", redirect:false});
+            if(response.ok){
+              toast.success("Logged In Successfully")
+              router.push("/");
+              form.reset();
+            } else {
+              toast.error("Authentication Failed");
+            }
+
         }
-        const userData = {firstName, lastName, email, password}
-        await registerUser(userData);
+        catch (error){
+        console.log(error);  
+        toast.error(error)
+        }
       }
+
     return(
         <>
     <form
      onSubmit={handleSubmit}
-      className="mx-auto mt-16 max-w-xl sm:mt-20">
+      className=" mx-auto max-w-xl mt-10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 
           <div className="sm:col-span-2">
@@ -72,18 +80,12 @@ export default function RegisterForm(){
           </button>
         </div>
 
-        <div className='mt-5 text-center text-gray-400'>
+        <div className='my-5 text-center text-gray-400'>
             Or continue in with
         </div>
 
         {/* google login */}
-        <div className="form-control mt-5 w-full">
-           <button className='w-full'>
-            <ButtonFill>
-            <div className='flex items-center justify-center gap-2'><FcGoogle/> Sign in with google</div>
-            </ButtonFill>
-            </button>
-         </div>
+<SocialLogin/>
 
 {/* redirect buttons */}
 <div className='flex flex-wrap gap-5'>
@@ -109,7 +111,7 @@ Don't have accout register first
 </ButtonBorder>
 </Link>
 </div>
-</div>
+</div> 
       </form>
         </>
     );
