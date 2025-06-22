@@ -1,9 +1,9 @@
-import { ToastContainer } from "react-toastify";
-import Footer from "./components/Footer/Footer";
-import NavBar from "./components/NavBar/NavBar";
-import { ThemeProvider } from "./components/Theme/useTheme";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
+import { ThemeProvider } from "./components/Theme/useTheme";
 import NextAuthProvider from "@/Providers/NextAuthProvider";
+import ClientLayoutWrapper from "./components/ClientLayoutWrapper";
+
 
 export const metadata = {
   title: "paritto",
@@ -20,13 +20,9 @@ export default function RootLayout({ children }) {
 <NextAuthProvider>
      <ToastContainer />
       <ThemeProvider>
-      <NavBar/>
-      <div className="min-h-[calc(100dvh-300px)]">
+      <ClientLayoutWrapper>
         {children}
-      </div>
-      <div id="footer">
-      <Footer/>
-      </div>
+      </ClientLayoutWrapper>
       </ThemeProvider>
 </NextAuthProvider>
       </body>

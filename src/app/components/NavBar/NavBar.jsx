@@ -61,7 +61,7 @@ return(
 
   </div>
 ) : (
-  <Link href={"/Register"}>
+  <Link href={"/register"}>
     <ButtonBorder>Sign up</ButtonBorder>
   </Link>
 )}

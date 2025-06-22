@@ -104,7 +104,7 @@ Go Back to Home
 {/* redirect to login page */}
 <div className="form-control mt-4 text-sm">
 <Link
-href="/Register"
+href="/register"
 >
 <ButtonBorder>
 Don't have accout register first
