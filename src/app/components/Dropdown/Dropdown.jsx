@@ -33,7 +33,7 @@ export default function Dropdown({ onClose }) {
               </Link>
             </li>
             <li>
-              <Link href="/Dashboard" onClick={handleClose}>
+              <Link href="components/BlogContainer" onClick={handleClose}>
                 <ButtonFill>Dashboard</ButtonFill>
               </Link>
             </li>
