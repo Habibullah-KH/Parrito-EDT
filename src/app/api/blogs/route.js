@@ -1,30 +1,30 @@
-import { authOptions } from '@/lib/authOptions';
+// app/api/blogs/route.js
 import dbConnect, { collectionNamesObj } from '@/lib/dbConnect';
-import { getServerSession } from 'next-auth'; // To get the user session on the server
+import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
+import { authOptions } from "@/lib/authOptions";
 
-export async function GET() {
+export async function GET(req) {
   try {
+    // Note: session is not directly used for filtering here, as this endpoint is for ALL blogs.
+    // However, keeping getServerSession is fine if you want to ensure the server context is available.
     const session = await getServerSession(authOptions);
-    if (!session) {
-      // You might want to allow public viewing of blogs, or restrict to logged-in users.
-      // For now, let's assume blogs are public for viewing on the main page.
-      // If restricted, return: return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-    }
 
+    // This endpoint now explicitly returns all blogs, ignoring any query parameters.
     const blogCollection = await dbConnect(collectionNamesObj.blogCollection);
-    const blogs = await blogCollection.find({}).toArray(); // Fetch all blogs
+    const blogs = await blogCollection.find({}).toArray(); // Fetch ALL blogs
+
     return NextResponse.json(blogs, { status: 200 });
   } catch (error) {
-    console.error("Error fetching blogs:", error);
-    return NextResponse.json({ message: "Failed to fetch blogs." }, { status: 500 });
+    console.error("Error fetching all blogs:", error);
+    return NextResponse.json({ message: "Failed to fetch all blogs." }, { status: 500 });
   }
 }
 
 export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || !session.user || !session.user.id) { // Ensure user is logged in and has an ID
+    if (!session || !session.user || !session.user.id) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
@@ -38,8 +38,8 @@ export async function POST(req) {
     const result = await blogCollection.insertOne({
       title,
       content,
-      authorId: session.user.id, // Associate blog with the logged-in user
-      authorEmail: session.user.email, // Store author email for display
+      authorId: session.user.id,
+      authorEmail: session.user.email,
       createdAt: new Date(),
     });
 

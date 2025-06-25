@@ -6,7 +6,7 @@ import dbConnect, { collectionNamesObj } from "./dbConnect";
 import { ObjectId } from 'mongodb'; // Import ObjectId to handle MongoDB _id
 
 export const authOptions = {
-  // Configure one or more authentication providers
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -34,13 +34,12 @@ export const authOptions = {
     signIn: "/Login"
   },
   callbacks: {
-    // This callback is called whenever a JSON Web Token is created (e.g., at sign in)
-    async jwt({ token, user, account, profile }) {
-      // User is available for the first time after a successful sign in
+
+ async jwt({ token, user, account, profile }) {
       if (user) {
-        token.id = user.id; // Store custom user ID in the token
-        token.email = user.email; // Ensure email is also propagated
-        token.name = user.name; // Propagate name
+        token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
         if (account) {
           token.providerAccountId = account.providerAccountId;
           token.provider = account.provider;
@@ -73,7 +72,6 @@ export const authOptions = {
         const image = user.image;
 
         const userCollection = dbConnect(collectionNamesObj.userCollection);
-        // Find by providerAccountId for social logins
         let existingUser = null;
         if (providerAccountId) {
             existingUser = await userCollection.findOne({ providerAccountId });
@@ -91,17 +89,15 @@ export const authOptions = {
             createdAt: new Date(),
           };
           const result = await userCollection.insertOne(payload);
-          // If a new user is created via social login, ensure their _id is part of the 'user' object
-          // so it can be picked up by the jwt callback.
+
           user.id = result.insertedId.toString();
         } else {
-            // If user exists, ensure the user object passed to jwt has the correct ID
+
             user.id = existingUser._id.toString();
         }
       }
       return true; // Return true to allow sign in
     },
   },
-  // Ensure your JWT secret is set in .env.local
-  // secret: process.env.NEXTAUTH_SECRET,
+
 };
