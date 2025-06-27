@@ -26,7 +26,7 @@
 To get started with the project, follow these steps:
 
 ```bash
-git clone https://github.com/Habibullah-KH/PH_11_AS-client.git
+git clone https://github.com/Habibullah-KH/Parrito-eidTsk.git
 ```
 ```bash
 cd PH_11_AS-client
