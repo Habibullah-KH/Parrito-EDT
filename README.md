@@ -13,14 +13,14 @@
 - ⚡ State Management with RTK Query – Efficient and scalable data fetching and caching.
 
 #### 🧰 Tech Stack
-- Frontend	Next.js, React, Tailwind CSS
-- Backend/API	Next.js API Routes
-- State Mgmt	Redux Toolkit + RTK Query
-- Authentication	NextAuth.js
-- Database		MongoDB Atlas + Mongoose
-- AI Services	Gemini API
-- Deployment	Vercel
-- Hosting	Vercel
+- Frontend - Next.js, React, Tailwind CSS
+- Backend/API - Next.js API Routes
+- State Mgmt - Redux Toolkit + RTK Query
+- Authentication - NextAuth.js
+- Database - MongoDB Atlas + Mongoose
+- AI Services - Gemini API
+- Deployment - Vercel
+- Hosting - Vercel
 
 #### 🛠 Installation (Copy & Paste)
 To get started with the project, follow these steps:
@@ -29,7 +29,7 @@ To get started with the project, follow these steps:
 git clone https://github.com/Habibullah-KH/Parrito-eidTsk.git
 ```
 ```bash
-cd PH_11_AS-client
+cd paritto
 ```
 ```bash
 npm install
