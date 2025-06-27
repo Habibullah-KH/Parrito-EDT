@@ -1,6 +1,6 @@
 ## Paritto 
-### [Live Site: https://paritto.vercel.app](https://paritto.vercel.app) 
-### [GitHub Repository: https://github.com/Habibullah-KH/Parrito-eidTsk.git](https://github.com/Habibullah-KH/Parrito-eidTsk.git)
+##### [Live Site: https://paritto.vercel.app](https://paritto.vercel.app) 
+##### [GitHub Repository: https://github.com/Habibullah-KH/Parrito-eidTsk.git](https://github.com/Habibullah-KH/Parrito-eidTsk.git)
 
 #### Paritto is a modern blog platform built with Next.js, RTK Query, and integrated AI assistance, designed to enhance the blogging experience. The platform supports full blog CRUD functionality, user authentication, and AI-powered blog writing features.
 
