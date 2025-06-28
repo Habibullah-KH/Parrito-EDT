@@ -19,7 +19,7 @@ export const blogApi = createApi({
       query: () => 'blogs', // This will now ONLY fetch from /api/blogs (all blogs)
       providesTags: ['Blog'], // Tags this query for caching
     }),
-
+    
     // 2. NEW Query to get blogs filtered by user email (for private dashboard view)
     getUserBlogsByEmail: builder.query({
       query: ({ email }) => {

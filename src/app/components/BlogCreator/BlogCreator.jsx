@@ -36,6 +36,8 @@ export default function BlogCreator({ blog = null }) {
     }
     setIsGenerating(true);
     setMessage('Generating content with AI...');
+
+       // generate blog
     try {
       const result = await generateBlogContent({ prompt: description.trim(), existingContent: description.trim() }).unwrap();
       setDescription(result.generatedContent);
@@ -64,11 +66,14 @@ export default function BlogCreator({ blog = null }) {
     setIsSaving(true);
     setMessage(blog ? 'Updating blog post...' : 'Saving blog post...');
 
+    // Update blog
     try {
       if (blog?._id) {
         await updateBlog({ id: blog._id, updatedData: { title, content: description } }).unwrap();
         setMessage('Blog updated successfully!');
-      } else {
+      } 
+    // create blog      
+      else {
         await createBlog({ title, content: description }).unwrap();
         setMessage('Blog created successfully!');
       }
@@ -84,7 +89,7 @@ export default function BlogCreator({ blog = null }) {
   };
 
   return (
-    <div className="mx-auto mt-16 max-w-xl p-6 backdrop-blur-md rounded-2xl shadow-xl">
+    <div className="mx-auto mt-16 p-6 backdrop-blur-md rounded-2xl shadow-xl">
       <h2 className="text-3xl font-bold text-center mb-8">
         {blog ? 'Edit Your Blog Post' : 'Create Your Blog Post'}
       </h2>
