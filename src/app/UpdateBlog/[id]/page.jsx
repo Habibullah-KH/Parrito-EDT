@@ -41,7 +41,7 @@ export default function UpdateBlogPage() {
     try {
       await updateBlog({ id, updatedData: blogData }).unwrap();
       toast.success('Blog updated successfully!');
-      router.push('/dashboard');
+      router.push('/components/BlogContainer');
     } catch (err) {
       toast.error('Failed to update blog');
     }

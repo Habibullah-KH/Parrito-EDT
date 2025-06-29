@@ -3,9 +3,14 @@
 import React from 'react'
 import ButtonBorder from '../Buttons/Button_border/ButtonBorder';
 import { useTheme } from '../Theme/useTheme';
+import { useRouter } from 'next/navigation';
 export default function BlogCard({blog}) {
+  const router = useRouter();
   const {darkMode} = useTheme();
-  console.log(darkMode);
+
+  const cardDetailNavigator = (blogId) => {
+    router.push(`/CardDetailPage/${blogId}`)
+  }
   return (
     <>
 <div
@@ -45,7 +50,9 @@ export default function BlogCard({blog}) {
 
   {/* Read more button */}
   <div className="text-[0.8rem] flex justify-end mt-2">
-    <button>
+    <button
+    onClick={() => cardDetailNavigator(blog._id)}
+    >
       <ButtonBorder>
         readmore
       </ButtonBorder>
