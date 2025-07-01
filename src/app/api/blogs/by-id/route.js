@@ -1,6 +1,6 @@
 import dbConnect, { collectionNamesObj } from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
-import { ObjectId } from "mongodb"; // ✅ Needed for ObjectId conversion
+import { ObjectId } from "mongodb";
 
 export async function GET(req) {
   try {
@@ -13,7 +13,7 @@ export async function GET(req) {
 
     const blogCollection = await dbConnect(collectionNamesObj.blogCollection);
     const blog = await blogCollection.findOne({
-      _id: new ObjectId(targetId), // ✅ Proper ID matching
+      _id: new ObjectId(targetId),
     });
 
     if (!blog) {

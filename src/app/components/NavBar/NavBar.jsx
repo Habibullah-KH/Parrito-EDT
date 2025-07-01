@@ -21,6 +21,7 @@ export default function NavBar(){
 return(
     <>
     <div className='p-3 sticky top-0 backdrop-blur z-50'>
+
     <div 
     className='flex justify-center  md:justify-around items-center max-w-[95%] mx-auto'>
      {/*Name container*/}

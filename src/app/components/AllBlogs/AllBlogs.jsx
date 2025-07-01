@@ -40,7 +40,7 @@ export default function AllPublicBlogs() {
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-center mb-8">
           All Blogs
         </h2>
-        <div>
+        <div className='grid justify-items-center'>
 
           {blogs && blogs.length > 0 ? (
             blogs.map((blog) => (
