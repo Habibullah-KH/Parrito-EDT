@@ -32,6 +32,13 @@ export const blogApi = createApi({
       providesTags: ['Blog'], 
     }),
 
+    getCardById: builder.query({
+      query: ({id}) => {
+        return `blogs/by-id?id=${id}`;
+      },
+      providesTags: ['Blog'],
+    }),
+
     // Mutation to create a new blog post
     createBlog: builder.mutation({
       query: (newBlog) => ({
@@ -79,6 +86,7 @@ updateBlog: builder.mutation({
 export const {
   useGetBlogsQuery,
   useGetUserBlogsByEmailQuery, 
+  useGetCardByIdQuery, 
   useCreateBlogMutation,
   useDeleteBlogMutation,
   useGenerateBlogContentMutation,
