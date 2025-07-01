@@ -23,9 +23,10 @@ return(
     <div className='p-3 sticky top-0 backdrop-blur z-50'>
 
     <div 
-    className='flex justify-center  md:justify-around items-center max-w-[95%] mx-auto'>
+    className='flex justify-center items-center md:justify-around max-w-[95%] mx-auto'>
+
      {/*Name container*/}
-     <div className='mb-3'>
+     <div className=''>
      <Link href={"/"}>
         <Logo/>
      </Link>
