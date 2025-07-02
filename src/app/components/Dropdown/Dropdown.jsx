@@ -11,7 +11,7 @@ export default function Dropdown({ onClose }) {
   };
 
   return (
-    <div className="flex flex-col gap-5 justify-between p-2 rounded-xl backdrop-blur">
+    <div className="flex flex-col gap-5 justify-between p-2 rounded-xl">
       <ul>
         <li>
           <Link href="#footer" onClick={handleClose}>

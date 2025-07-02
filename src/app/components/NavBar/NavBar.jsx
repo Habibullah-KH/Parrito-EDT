@@ -12,15 +12,19 @@ import { useSession } from 'next-auth/react';
 
 export default function NavBar(){
     const {data : session, status} = useSession();
-    const {swapTheme} = useTheme();
+    const {swapTheme, darkMode} = useTheme();
 
     const [navDrop, setNavDrop] = useState(false);
     const handleDropdown = () => {
         setNavDrop(!navDrop);
     };
+
+
 return(
     <>
-    <div className='p-3 sticky top-0 backdrop-blur z-50'>
+    <div className={`
+    ${darkMode === 'enabled' ? "dropdown_black" : "dropdown_white" }
+    p-3 sticky top-0 z-50 `}>
 
     <div 
     className='flex justify-center items-center md:justify-around max-w-[95%] mx-auto'>
@@ -56,7 +60,8 @@ return(
     </div>
 
     {/* Dropdown Swap */}
-    <div className={`dropdown_container backdrop-blur-2xl 
+    <div className={`dropdown_container duration-1000
+    ${darkMode === 'enabled' ? "dropdown_black" : "dropdown_white" }
   ${navDrop ? 'top-[50px]' : '-top-[590px]'}`}>
   <Dropdown onClose={() => setNavDrop(false)} />
 </div>

@@ -9,7 +9,7 @@
     right: -20px;
     padding: 1rem;
     width: 13rem;
-    border-radius: 0 0 0 10px;
+    border-radius:10px;
 }
 
 /* control dropdown lists*/
@@ -18,3 +18,10 @@
     gap: 5px;
 }
 
+.dropdown_white{
+    background-color: rgba(255, 255, 255, 0.688);
+}
+
+.dropdown_black{
+    background-color: #0f172ad1;
+}
