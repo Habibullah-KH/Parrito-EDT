@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
+
 import {
   useCreateBlogMutation,
   useGenerateBlogContentMutation,
   useUpdateBlogMutation,
 } from '@/lib/services/blogApi';
+
 import ButtonFill from '../Buttons/Button_fill/ButtonFill';
 import ButtonBorder from '../Buttons/Button_border/ButtonBorder';
+import { toast } from 'react-toastify';
 
 export default function BlogCreator({ blog = null }) {
   const { data: session, status } = useSession();
@@ -16,6 +19,29 @@ export default function BlogCreator({ blog = null }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState('');
+
+  const [image, setImage] = useState(null);
+
+  const [imageUrl, setImageUrl] = useState('');
+  const fileInputRef = useRef();
+  const handleImageInput = () => {
+    fileInputRef.current.click();
+  }
+
+  const allowedExtensions = ["jpg", "jpeg", "png"];
+  const checkFiles = () => {
+    const check = image.name.substring(image.name.lastIndexOf(".") + 1);
+    
+    if(!allowedExtensions.includes(check)){
+      setImage(null)
+      return toast.error("Please upload jpg, jpeg or png image format");
+    }
+  }   
+  
+  useEffect(() => {
+  if(image){checkFiles()}
+  }, [image])
+  
 
   // RTK Query hooks
   const [createBlog] = useCreateBlogMutation();
@@ -72,6 +98,7 @@ export default function BlogCreator({ blog = null }) {
         await updateBlog({ id: blog._id, updatedData: { title, content: description } }).unwrap();
         setMessage('Blog updated successfully!');
       } 
+      
     // create blog      
       else {
         await createBlog({ title, content: description }).unwrap();
@@ -97,7 +124,7 @@ export default function BlogCreator({ blog = null }) {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title Input */}
         <div>
-          <label htmlFor="title" className="block text-sm font-medium">Blog Title</label>
+          <label htmlFor="title" className="block text-sm font-medium mb-2">Blog Title</label>
           <input
             id="title"
             type="text"
@@ -108,9 +135,52 @@ export default function BlogCreator({ blog = null }) {
           />
         </div>
 
+        {/* Image Upload */}
+        <div>
+        <input
+          ref={fileInputRef}
+          id="image"
+          name="image"
+          type="file"
+          accept="image/"
+          onChange={(e) => setImage(e.target.files[0])}
+          className="opacity-0 absolute w-0 h-0"
+          required
+        />
+
+        <label
+          htmlFor="image" className="block text-sm font-medium"
+        >
+          {image === null
+            ? "upload your picture"
+            : "chose another picture"}
+        </label>
+        <p className="text-center text-primarry font-bold my-2">
+          { image?.name ?
+            image?.name.length > 25 ? 
+            `${image.name.slice(0, 5)}...${image.name.slice(-4)}`
+            :
+            image.name
+
+            :
+            null
+          }
+        </p>
+
+        <button
+          onClick={handleImageInput}
+          className='block w-full'
+        >
+          <ButtonFill>
+          {image ? "Change Thumbnail" : "Upload Thumbnail"}
+          </ButtonFill>
+        </button>
+
+        </div>
+
         {/* Content Area */}
         <div>
-          <label htmlFor="description" className="block text-sm font-medium">Blog Content</label>
+          <label htmlFor="description" className="block text-sm font-medium mb-2">Blog Content</label>
           <textarea
             id="description"
             rows={10}

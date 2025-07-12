@@ -60,7 +60,7 @@ return(
     </div>
 
     {/* Dropdown Swap */}
-    <div className={`dropdown_container duration-1000
+    <div className={`dropdown_container duration-700
     ${darkMode === 'enabled' ? "dropdown_black" : "dropdown_white" }
   ${navDrop ? 'top-[50px]' : '-top-[590px]'}`}>
   <Dropdown onClose={() => setNavDrop(false)} />

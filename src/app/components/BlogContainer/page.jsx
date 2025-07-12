@@ -9,6 +9,7 @@ import ButtonFill from '../Buttons/Button_fill/ButtonFill';
 import BlogCreator from '../BlogCreator/BlogCreator';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import Loading from '../Loading/Loading';
 
 export default function BlogContainerPage() {
   const { data: session, status } = useSession();
@@ -41,7 +42,7 @@ export default function BlogContainerPage() {
   if (status === 'loading' || isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-tr">
-        <p className="text-2xl font-semibold">Loading your blogs...</p>
+      <Loading/>
       </div>
     );
   }
