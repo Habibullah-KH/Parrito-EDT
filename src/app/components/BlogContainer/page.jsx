@@ -36,7 +36,6 @@ export default function BlogContainerPage() {
 
   const handleEdit = (blogId) => {
     router.push(`/UpdateBlog/${blogId}`);
-
   };
 
   if (status === 'loading' || isLoading) {

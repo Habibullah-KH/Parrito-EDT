@@ -10,6 +10,7 @@ import {
 import ButtonFill from '../Buttons/Button_fill/ButtonFill';
 import ButtonBorder from '../Buttons/Button_border/ButtonBorder';
 import { toast } from 'react-toastify';
+import { imageUpload } from '@/lib/utils/imageUpload';
 
 export default function BlogCreator({ blog = null }) {
   const { data: session, status } = useSession();
@@ -19,10 +20,9 @@ export default function BlogCreator({ blog = null }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState('');
-
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false)
 
-  const [imageUrl, setImageUrl] = useState('');
   const fileInputRef = useRef();
   const handleImageInput = () => {
     fileInputRef.current.click();
@@ -79,6 +79,12 @@ export default function BlogCreator({ blog = null }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(!image){
+      return toast.warning("Please upload you Thumbnail");
+    }
+    
+    setLoading(true)
+
     if (status !== 'authenticated') {
       setMessage('You must be logged in to create or edit a blog.');
       return;
@@ -95,13 +101,15 @@ export default function BlogCreator({ blog = null }) {
     // Update blog
     try {
       if (blog?._id) {
-        await updateBlog({ id: blog._id, updatedData: { title, content: description } }).unwrap();
+        const imageUrl = await imageUpload(image);
+        await updateBlog({ id: blog._id, updatedData: { title, content: description, image: imageUrl } }).unwrap();
         setMessage('Blog updated successfully!');
       } 
       
     // create blog      
       else {
-        await createBlog({ title, content: description }).unwrap();
+        const imageUrl = await imageUpload(image);  
+        await createBlog({ title, content: description, image: imageUrl }).unwrap();
         setMessage('Blog created successfully!');
       }
 
@@ -157,13 +165,14 @@ export default function BlogCreator({ blog = null }) {
         </label>
         <p className="text-center text-primarry font-bold my-2">
           { image?.name ?
+
             image?.name.length > 25 ? 
             `${image.name.slice(0, 5)}...${image.name.slice(-4)}`
             :
             image.name
 
-            :
-            null
+               :
+               null
           }
         </p>
 

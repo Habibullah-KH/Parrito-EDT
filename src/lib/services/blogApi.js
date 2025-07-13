@@ -71,7 +71,7 @@ export const blogApi = createApi({
 // lib/services/blogApi.js
 updateBlog: builder.mutation({
   query: ({ id, updatedData }) => ({
-    url: `blogs/${id}`, // ✅ now matches [id]/route.js
+    url: `blogs/${id}`,
     method: 'PUT',
     body: updatedData,
   }),
