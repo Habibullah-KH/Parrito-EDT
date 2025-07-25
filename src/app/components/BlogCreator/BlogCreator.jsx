@@ -34,7 +34,7 @@ export default function BlogCreator({ blog = null }) {
     
     if(!allowedExtensions.includes(check)){
       setImage(null)
-      return toast.error("Please upload jpg, jpeg or png image format");
+      return toast.error("Please upload a valid image (jpg, jpeg, png)");
     }
   }   
   
@@ -102,19 +102,25 @@ export default function BlogCreator({ blog = null }) {
     try {
       if (blog?._id) {
         const imageUrl = await imageUpload(image);
+        console.log(imageUrl);
         await updateBlog({ id: blog._id, updatedData: { title, content: description, image: imageUrl } }).unwrap();
-        setMessage('Blog updated successfully!');
+        toast.success('Blog updated successfully!')
+        setLoading(false)
       } 
       
     // create blog      
       else {
         const imageUrl = await imageUpload(image);  
+        console.log(imageUrl);
         await createBlog({ title, content: description, image: imageUrl }).unwrap();
-        setMessage('Blog created successfully!');
+        toast.success('Blog created successfully!')
+        setLoading(false)
       }
 
       setTitle('');
       setDescription('');
+      setImage('');
+      setMessage('');
     } catch (error) {
       console.error('Blog save failed:', error);
       setMessage(`Error: ${error.data?.message || error.message}`);
@@ -150,7 +156,7 @@ export default function BlogCreator({ blog = null }) {
           id="image"
           name="image"
           type="file"
-          accept="image/"
+          accept="image/jpeg, image/png, image/jpg"
           onChange={(e) => setImage(e.target.files[0])}
           className="opacity-0 absolute w-0 h-0"
           required

@@ -28,7 +28,7 @@ export async function POST(req) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const { title, content } = await req.json();
+    const { title, content, image } = await req.json();
 
     if (!title || !content) {
       return NextResponse.json({ message: 'Title and content are required.' }, { status: 400 });
@@ -37,6 +37,7 @@ export async function POST(req) {
     const blogCollection = await dbConnect(collectionNamesObj.blogCollection);
     const result = await blogCollection.insertOne({
       title,
+      image,
       content,
       authorId: session.user.id,
       authorEmail: session.user.email,

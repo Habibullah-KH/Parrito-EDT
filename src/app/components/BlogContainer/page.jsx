@@ -10,6 +10,7 @@ import BlogCreator from '../BlogCreator/BlogCreator';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import Loading from '../Loading/Loading';
+import Swal from 'sweetalert2';
 
 export default function BlogContainerPage() {
   const { data: session, status } = useSession();
@@ -22,7 +23,17 @@ export default function BlogContainerPage() {
   const [deleteBlog, { isLoading: isDeleting }] = useDeleteBlogMutation();
 
   const handleDelete = async (blogId) => {
-    if (window.confirm('Are you sure you want to delete this blog post?')) {
+
+  Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then( async (result) => {
+  if (result.isConfirmed) {
       try {
         await deleteBlog(blogId).unwrap();
         toast.success('Blog deleted successfully!');
@@ -31,7 +42,15 @@ export default function BlogContainerPage() {
         console.error('Failed to delete blog:', err);
         toast.error(`Failed to delete blog: ${err.data?.message || err.message}`);
       }
-    }
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+  }
+});
+
+  
   };
 
   const handleEdit = (blogId) => {
@@ -134,6 +153,8 @@ export default function BlogContainerPage() {
                 You haven't created any blogs yet. Be the first to create one!
               </p>
             )}
+
+            
           </div>
         </div>
       </div>

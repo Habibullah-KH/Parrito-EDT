@@ -1,7 +1,7 @@
 "use client"
 import './navbar.css'
 import ButtonBorder from '../Buttons/Button_border/ButtonBorder'
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ThemeSwap from '../Buttons/Theme_swap/ThemeSwap'
 import { useTheme } from '../Theme/useTheme'
 import Logo from '../Logo/Logo';
@@ -15,10 +15,28 @@ export default function NavBar(){
     const {swapTheme, darkMode} = useTheme();
 
     const [navDrop, setNavDrop] = useState(false);
+    const dropdownRef = useRef(null); // dropdown container
+    const triggerRef = useRef(null);  // icon/button that toggles dropdown
     const handleDropdown = () => {
         setNavDrop(!navDrop);
     };
 
+// Close dropdown if click is outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(event.target)
+      ) {
+        setNavDrop(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
 return(
     <>
@@ -39,6 +57,11 @@ return(
 
 {/*button + theme container*/}
 
+{/*search system*/}
+<div>
+
+</div>
+
 <div className='flex items-center absolute right-5 md:static'>
      {/*theme section start*/}
      <div 
@@ -55,14 +78,17 @@ return(
     <div 
       className='flex ml-5'
       onClick={handleDropdown}
+      ref={triggerRef}
     >
       <ProfileIcon />
     </div>
 
     {/* Dropdown Swap */}
-    <div className={`dropdown_container duration-700
+    <div className={`dropdown_container
     ${darkMode === 'enabled' ? "dropdown_black" : "dropdown_white" }
-  ${navDrop ? 'top-[50px]' : '-top-[590px]'}`}>
+  ${navDrop ? 'top-[50px]' : '-top-[590px]'}`}
+  ref={dropdownRef}
+  >
   <Dropdown onClose={() => setNavDrop(false)} />
 </div>
 

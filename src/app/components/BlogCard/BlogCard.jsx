@@ -42,7 +42,7 @@ export default function BlogCard({blog}) {
     <div className="w-[8rem] h-[5rem] overflow-hidden rounded-md col-span-1 justify-self-end">
       <img
         className="w-full h-full object-cover"
-        src="./billi.jpeg"
+        src={blog?.image}
         alt="blog_image"
       />
     </div>

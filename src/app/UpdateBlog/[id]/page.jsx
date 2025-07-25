@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useUpdateBlogMutation } from '@/lib/services/blogApi';
 import { toast } from 'react-toastify';
 import ButtonFill from '@/app/components/Buttons/Button_fill/ButtonFill';
+import Loading from '@/app/components/Loading/Loading';
 
 export default function UpdateBlogPage() {
   const { id } = useParams();
@@ -15,6 +16,9 @@ export default function UpdateBlogPage() {
   const [blogData, setBlogData] = useState({ title: '', content: '' });
   const [loading, setLoading] = useState(true);
 
+  if(loading){
+    return <Loading/>;
+  }
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -47,7 +51,7 @@ export default function UpdateBlogPage() {
     }
   };
 
-  if (loading) return <p className="text-center mt-10 text-xl">Loading blog data...</p>;
+  if (loading) return <p className="text-center mt-10 text-xl"><Loading/></p>;
 
   return (
     <div className="max-w-xl mx-auto my-20 p-6 rounded-xl shadow-lg">
