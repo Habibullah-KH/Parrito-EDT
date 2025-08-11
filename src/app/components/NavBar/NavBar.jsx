@@ -52,7 +52,7 @@ return(
      <Link href={"/"}>
         <Logo/>
      </Link>
-     </div>
+     </div> 
      {/*Name container end*/}
 
 {/*button + theme container*/}

@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -22,6 +23,10 @@ export default function BlogCreator({ blog = null }) {
   const [message, setMessage] = useState('');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false)
+
+  const [showAIPrompt, setShowAIPrompt] = useState(false);
+  const [aiPrompt, setAIPrompt] = useState('');
+
 
   const fileInputRef = useRef();
   const handleImageInput = () => {
@@ -56,16 +61,20 @@ export default function BlogCreator({ blog = null }) {
   }, [blog]);
 
   const handleGenerateAI = async () => {
-    if (!description.trim()) {
-      setMessage('Please type some initial text or a topic for AI generation.');
-      return;
-    }
+if (!aiPrompt.trim()) {
+  setMessage('Please enter a prompt for AI generation.');
+  return;
+}
+
     setIsGenerating(true);
     setMessage('Generating content with AI...');
 
        // generate blog
     try {
-      const result = await generateBlogContent({ prompt: description.trim(), existingContent: description.trim() }).unwrap();
+      const result = await generateBlogContent({
+      prompt: aiPrompt.trim(),
+      existingContent: description.trim(),
+}).unwrap();
       setDescription(result.generatedContent);
       setMessage('Content generated successfully!');
     } catch (error) {
@@ -195,26 +204,64 @@ export default function BlogCreator({ blog = null }) {
 
         {/* Content Area */}
         <div>
-          <label htmlFor="description" className="block text-sm font-medium mb-2">Blog Content</label>
+          <label htmlFor="description" className="block text-sm font-medium mb-2">Tell your story</label>
           <textarea
             id="description"
             rows={10}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            onKeyDown={(e) => {
+    if (e.key === 'Enter') e.preventDefault();
+  }}
             className="block w-full rounded-md ring-1 p-2 focus:ring-2"
             required
           />
-          <div className="mt-4 flex justify-end">
-            <button
-              type="button"
-              onClick={handleGenerateAI}
-              disabled={isGenerating || status !== 'authenticated'}
-            >
-              <ButtonBorder>
-                {isGenerating ? 'Generating...' : 'Generate with AI'}
-              </ButtonBorder>
-            </button>
-          </div>
+          
+          <div className="mt-4 space-y-3">
+  {/* Toggle AI Prompt Input */}
+  {!showAIPrompt && (
+    <div className="flex justify-end">
+      <p
+        onClick={() => setShowAIPrompt(true)}
+        disabled={status !== 'authenticated'}
+      >
+        <ButtonBorder>Generate with AI</ButtonBorder>
+      </p>
+    </div>
+  )}
+
+  {/* AI Prompt Input */}
+  {showAIPrompt && (
+    <div className="space-y-2">
+      <label htmlFor="aiPrompt" className="block text-sm font-medium">
+        Enter a topic or idea for AI to generate:
+      </label>
+      <input
+        id="aiPrompt"
+        type="text"
+        value={aiPrompt}
+        onChange={(e) => setAIPrompt(e.target.value)}
+        onKeyDown={(e) => {
+    if (e.key === 'Enter') e.preventDefault();
+  }}
+        className="block w-full rounded-md ring-1 p-2 focus:ring-2"
+        placeholder="e.g. Benefits of mindfulness"
+      />
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={handleGenerateAI}
+          disabled={isGenerating || !aiPrompt.trim()}
+        >
+          <ButtonBorder>
+            {isGenerating ? 'Generating...' : 'Generate'}
+          </ButtonBorder>
+        </button>
+      </div>
+    </div>
+  )}
+</div>
+
         </div>
 
         {/* Submit Button */}

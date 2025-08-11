@@ -20,7 +20,7 @@ export default function DashboardBanner() {
                 </h1>
 
                 <div className="w-fit">
-                    <Link href={'/components/BlogContainer'} onClick={(e) => handleSafeClick(e, "components/BlogContainer")}>
+                    <Link href={'/components/BlogCreator'} onClick={(e) => handleSafeClick(e, "components/BlogCreator")}>
                     <ButtonBorder>
                         Write a blog
                     </ButtonBorder></Link>
